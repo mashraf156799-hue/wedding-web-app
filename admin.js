@@ -47,14 +47,14 @@ function fileToBase64(file) {
 
 // Default Data Fallbacks (Mirroring script.js)
 const DEFAULT_CONFIG = {
-    groomName: 'محمد', brideName: 'ندى',
-    hennaDate: 'الخميس ٣ / ٩', hennaLocation: 'في بيت العروسة',
+    groomName: 'إبراهيم', brideName: 'منه',
+    henMennate: 'الخميس ٣ / ٩', hennaLocation: 'في بيت العروسة',
     weddingDay: 'يوم الجمعة', weddingDateArabic: 'الموافق ٤ / ٩',
     weddingTime: 'من ٥ ل ٨ مساءً', venueName: 'قاعة إيزابيلا', venueAddress: 'أمام بنزينة الحصري',
     storyText1: 'في لحظة لم نكن نتوقعها، جمعنا القدر ليبدأ فصل جديد من حياتنا معاً. من أول نظرة إلى هذا اليوم، كانت رحلتنا مليئة بالحب والأمل والأحلام المشتركة.',
     storyText2: 'واليوم، نبدأ حكاية جديدة... ونسعد بمشاركتكم هذه اللحظة.',
-    groomNameEn: 'Mohamed', brideNameEn: 'Nada',
-    hennaDateEn: 'Thursday, Sept 3', hennaLocationEn: 'At the Bride\'s House',
+    groomNameEn: 'Ibrahim', brideNameEn: 'Menna',
+    henMennateEn: 'Thursday, Sept 3', hennaLocationEn: 'At the Bride\'s House',
     weddingDayEn: 'Friday', weddingDateEn: 'September 4',
     weddingTimeEn: '5:00 PM to 8:00 PM', venueNameEn: 'Isabella Hall', venueAddressEn: 'In front of El Hosary Gas Station',
     storyText1En: 'In a moment we never expected, destiny brought us together to start a new chapter in our lives. From the first glance to this day, our journey has been filled with love, hope, and shared dreams.',
@@ -88,10 +88,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     const config = { ...DEFAULT_CONFIG, ...savedConfig };
 
     const textFields = [
-        'groomName', 'brideName', 'hennaDate', 'hennaLocation',
+        'groomName', 'brideName', 'henMennate', 'hennaLocation',
         'weddingDay', 'weddingDateArabic', 'weddingTime', 'venueName', 'venueAddress',
         'storyText1', 'storyText2',
-        'groomNameEn', 'brideNameEn', 'hennaDateEn', 'hennaLocationEn',
+        'groomNameEn', 'brideNameEn', 'henMennateEn', 'hennaLocationEn',
         'weddingDayEn', 'weddingDateEn', 'weddingTimeEn', 'venueNameEn', 'venueAddressEn',
         'storyText1En', 'storyText2En', 'googleMapsURL'
     ];
@@ -124,10 +124,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 // Save Function
 async function saveAll() {
     const textFields = [
-        'groomName', 'brideName', 'hennaDate', 'hennaLocation',
+        'groomName', 'brideName', 'henMennate', 'hennaLocation',
         'weddingDay', 'weddingDateArabic', 'weddingTime', 'venueName', 'venueAddress',
         'storyText1', 'storyText2',
-        'groomNameEn', 'brideNameEn', 'hennaDateEn', 'hennaLocationEn',
+        'groomNameEn', 'brideNameEn', 'henMennateEn', 'hennaLocationEn',
         'weddingDayEn', 'weddingDateEn', 'weddingTimeEn', 'venueNameEn', 'venueAddressEn',
         'storyText1En', 'storyText2En', 'googleMapsURL'
     ];
@@ -155,6 +155,15 @@ async function saveAll() {
 
     const venueFile = document.getElementById('venueImageInput').files[0];
     if (venueFile) images.venue = await fileToBase64(venueFile);
+
+    const m1 = document.getElementById('marquee1Input').files[0];
+    if (m1) images.marquee1 = await fileToBase64(m1);
+    
+    const m2 = document.getElementById('marquee2Input').files[0];
+    if (m2) images.marquee2 = await fileToBase64(m2);
+    
+    const m3 = document.getElementById('marquee3Input').files[0];
+    if (m3) images.marquee3 = await fileToBase64(m3);
 
     await saveDB('weddingImages', images);
 

@@ -1,13 +1,13 @@
-// ═══════════════════════════════════════════════════════════════
+﻿// ═══════════════════════════════════════════════════════════════
 // WEDDING CONFIGURATION (DEFAULT FALLBACK)
 // ═══════════════════════════════════════════════════════════════
 const DEFAULT_CONFIG = {
     // Arabic Config
-    groomName: 'محمد',
-    brideName: 'ندى',
+    groomName: 'إبراهيم',
+    brideName: 'منه',
     
     // Henna
-    hennaDate: 'الخميس ٣ / ٩',
+    henMennate: 'الخميس ٣ / ٩',
     hennaLocation: 'في بيت العروسة',
     
     // Wedding
@@ -21,11 +21,11 @@ const DEFAULT_CONFIG = {
     storyText2: 'واليوم، نبدأ حكاية جديدة... ونسعد بمشاركتكم هذه اللحظة.',
     
     // English Config
-    groomNameEn: 'Mohamed',
-    brideNameEn: 'Nada',
+    groomNameEn: 'Ibrahim',
+    brideNameEn: 'Menna',
     
     // Henna En
-    hennaDateEn: 'Thursday, Sept 3',
+    henMennateEn: 'Thursday, Sept 3',
     hennaLocationEn: 'At the Bride\'s House',
     
     // Wedding En
@@ -151,7 +151,7 @@ function initWeddingApp() {
     applyLanguage(); // This calls applyConfigToHTML
     initOpeningScreen();
     initMusicControl();
-    initScrollAnimations();
+    initScrollAnimations(); initMarquee(savedImages);
     initSmoothScroll();
     initHeroParallax();
 }
@@ -174,7 +174,7 @@ function applyConfigToHTML() {
     const bride = isAr ? WEDDING_CONFIG.brideName : WEDDING_CONFIG.brideNameEn;
     
     // Henna
-    const hDate = isAr ? WEDDING_CONFIG.hennaDate : WEDDING_CONFIG.hennaDateEn;
+    const hDate = isAr ? WEDDING_CONFIG.henMennate : WEDDING_CONFIG.henMennateEn;
     const hLoc = isAr ? WEDDING_CONFIG.hennaLocation : WEDDING_CONFIG.hennaLocationEn;
     
     // Wedding
@@ -248,7 +248,7 @@ function initOpeningScreen() {
         
         // Retrigger animations on main content load for better effect
         setTimeout(() => {
-            initScrollAnimations();
+            initScrollAnimations(); initMarquee(savedImages);
         }, 100);
 
         if (musicControl) {
@@ -395,4 +395,46 @@ function initHeroParallax() {
             ticking = true;
         }
     }, { passive: true });
+}
+
+// MARQUEE INIT
+function initMarquee(savedImages) {
+    const track = document.getElementById('marqueeTrack');
+    const section = document.getElementById('marqueeGallery');
+    if (!track || !section) return;
+
+    let images = [];
+    if (savedImages && (savedImages.marquee1 || savedImages.marquee2 || savedImages.marquee3)) {
+        if (savedImages.marquee1) images.push(savedImages.marquee1);
+        if (savedImages.marquee2) images.push(savedImages.marquee2);
+        if (savedImages.marquee3) images.push(savedImages.marquee3);
+    } else {
+        // Defaults
+        images = [
+            'assets/images/gallery-1.jpg',
+            'assets/images/gallery-2.jpg',
+            'assets/images/gallery-3.jpg'
+        ];
+    }
+
+    if (images.length === 0) {
+        section.style.display = 'none';
+        return;
+    }
+
+    section.style.display = 'block';
+    
+    // Duplicate for infinite scrolling
+    const repeated = [...images, ...images, ...images, ...images, ...images, ...images];
+    
+    track.innerHTML = '';
+    repeated.forEach(src => {
+        const item = document.createElement('div');
+        item.className = 'marquee-item';
+        const img = document.createElement('img');
+        img.src = src;
+        img.loading = 'lazy';
+        item.appendChild(img);
+        track.appendChild(item);
+    });
 }
