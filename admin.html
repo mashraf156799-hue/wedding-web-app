@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة تحكم الدعوة | Admin Panel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #B8976A;
+      --bg: #F5F0EB;
+      --text: #2C2420;
+    }
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 2rem;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+    h1 {
+      text-align: center;
+      color: var(--primary);
+      margin-bottom: 2rem;
+    }
+    .section {
+      background: #fafafa;
+      border: 1px solid #eee;
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+    }
+    .section h2 {
+      margin-top: 0;
+      color: var(--text);
+      font-size: 1.2rem;
+      border-bottom: 2px solid var(--primary);
+      display: inline-block;
+      padding-bottom: 0.3rem;
+      margin-bottom: 1rem;
+    }
+    .form-group {
+      margin-bottom: 1rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .form-group.full {
+      grid-template-columns: 1fr;
+    }
+    label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 0.4rem;
+    }
+    input[type="text"], input[type="datetime-local"], textarea {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-family: inherit;
+      box-sizing: border-box;
+    }
+    input[type="file"] {
+      display: block;
+      margin-top: 0.5rem;
+    }
+    .btn {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      font-family: inherit;
+      font-weight: bold;
+      transition: opacity 0.3s;
+    }
+    .btn:hover {
+      opacity: 0.9;
+    }
+    .link-btn {
+      display: block;
+      text-align: center;
+      margin-top: 1rem;
+      color: var(--primary);
+      text-decoration: none;
+    }
+    .toast {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #4CAF50;
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 8px;
+      display: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .preview-img {
+      max-width: 200px;
+      margin-top: 10px;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="loginScreen" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 9999; display: flex; align-items: center; justify-content: center; flex-direction: column;">
+    <div style="background: white; padding: 3rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: center; max-width: 400px; width: 90%;">
+      <h2 style="color: var(--primary); margin-bottom: 1.5rem;">لوحة التحكم</h2>
+      <input type="text" id="adminUser" placeholder="اسم المستخدم" style="width: 100%; padding: 0.8rem; margin-bottom: 1rem; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; font-family: inherit;">
+      <input type="password" id="adminPass" placeholder="كلمة المرور" style="width: 100%; padding: 0.8rem; margin-bottom: 1rem; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; font-family: inherit;">
+      <p id="loginError" style="color: red; display: none; font-size: 0.9rem; margin-bottom: 1rem;">البيانات غير صحيحة!</p>
+      <button onclick="checkLogin()" style="background: var(--primary); color: white; border: none; padding: 1rem; width: 100%; border-radius: 6px; font-weight: bold; cursor: pointer; font-family: inherit; font-size: 1.1rem;">تسجيل الدخول</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">تم الحفظ بنجاح!</div>
+
+  <div class="container" id="adminPanelContainer" style="display: none;">
+    <h1>إعدادات الدعوة | Invitation Settings</h1>
+    
+    <div class="section">
+      <h2>العرسان | Names</h2>
+      <div class="form-group">
+        <div>
+          <label>اسم العريس (عربي)</label>
+          <input type="text" id="groomName">
+        </div>
+        <div>
+          <label>Groom's Name (English)</label>
+          <input type="text" id="groomNameEn">
+        </div>
+      </div>
+      <div class="form-group">
+        <div>
+          <label>اسم العروسة (عربي)</label>
+          <input type="text" id="brideName">
+        </div>
+        <div>
+          <label>Bride's Name (English)</label>
+          <input type="text" id="brideNameEn">
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>يوم الحنة | Henna Day</h2>
+      <div class="form-group">
+        <div>
+          <label>التاريخ (عربي) - مثلا: الخميس ٣ / ٩</label>
+          <input type="text" id="hennaDate">
+        </div>
+        <div>
+          <label>Date (English) - e.g: Thursday, Sept 3</label>
+          <input type="text" id="hennaDateEn">
+        </div>
+      </div>
+      <div class="form-group">
+        <div>
+          <label>المكان (عربي) - مثلا: في بيت العروسة</label>
+          <input type="text" id="hennaLocation">
+        </div>
+        <div>
+          <label>Location (English) - e.g: At the Bride's House</label>
+          <input type="text" id="hennaLocationEn">
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>حفل الزفاف | Wedding Event</h2>
+      <div class="form-group">
+        <div>
+          <label>اليوم (عربي)</label>
+          <input type="text" id="weddingDay">
+        </div>
+        <div>
+          <label>Day (English)</label>
+          <input type="text" id="weddingDayEn">
+        </div>
+      </div>
+      <div class="form-group">
+        <div>
+          <label>التاريخ (عربي) - مثلا: الموافق ٤ / ٩</label>
+          <input type="text" id="weddingDateArabic">
+        </div>
+        <div>
+          <label>Date (English) - e.g: September 4</label>
+          <input type="text" id="weddingDateEn">
+        </div>
+      </div>
+      <div class="form-group">
+        <div>
+          <label>الوقت (عربي) - مثلا: من ٥ ل ٨ مساءً</label>
+          <input type="text" id="weddingTime">
+        </div>
+        <div>
+          <label>Time (English)</label>
+          <input type="text" id="weddingTimeEn">
+        </div>
+      </div>
+      <div class="form-group">
+        <div>
+          <label>اسم القاعة (عربي)</label>
+          <input type="text" id="venueName">
+        </div>
+        <div>
+          <label>Venue Name (English)</label>
+          <input type="text" id="venueNameEn">
+        </div>
+      </div>
+      <div class="form-group">
+        <div>
+          <label>العنوان بالتفصيل (عربي)</label>
+          <input type="text" id="venueAddress">
+        </div>
+        <div>
+          <label>Venue Address (English)</label>
+          <input type="text" id="venueAddressEn">
+        </div>
+      </div>
+      <div class="form-group full">
+        <label>تاريخ العد التنازلي (Countdown Date)</label>
+        <input type="datetime-local" id="weddingDate">
+      </div>
+      <div class="form-group full">
+        <label>رابط خريطة جوجل (Google Maps URL)</label>
+        <input type="text" id="googleMapsURL" dir="ltr">
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>قصتنا | Our Story</h2>
+      <div class="form-group full">
+        <label>الفقرة الأولى (عربي)</label>
+        <textarea id="storyText1" rows="3"></textarea>
+      </div>
+      <div class="form-group full">
+        <label>Paragraph 1 (English)</label>
+        <textarea id="storyText1En" rows="3" dir="ltr"></textarea>
+      </div>
+      <div class="form-group full">
+        <label>الفقرة الثانية (عربي)</label>
+        <textarea id="storyText2" rows="2"></textarea>
+      </div>
+      <div class="form-group full">
+        <label>Paragraph 2 (English)</label>
+        <textarea id="storyText2En" rows="2" dir="ltr"></textarea>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>الصور والموسيقى | Media</h2>
+      <div class="form-group full">
+        <label>صورة الغلاف (Hero Image)</label>
+        <input type="file" id="heroImageInput" accept="image/*">
+        <img id="heroPreview" class="preview-img">
+      </div>
+      <div class="form-group full">
+        <label>صورة العرسان (Story Image)</label>
+        <input type="file" id="coupleImageInput" accept="image/*">
+        <img id="couplePreview" class="preview-img">
+      </div>
+      <div class="form-group full">
+        <label>صورة القاعة (Venue Background)</label>
+        <input type="file" id="venueImageInput" accept="image/*">
+        <img id="venuePreview" class="preview-img">
+      </div>
+      <div class="form-group full">
+        <label>موسيقى الخلفية (Background Music)</label>
+        <input type="file" id="musicInput" accept="audio/*">
+        <audio id="musicPreview" controls style="margin-top:10px; width:100%; display:none;"></audio>
+      </div>
+    </div>
+
+    <button class="btn" onclick="saveAll()">حفظ التعديلات | Save Changes</button>
+    <a href="index.html" class="link-btn">رجوع للدعوة | Back to Invitation</a>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>

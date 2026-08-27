@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>دعوة زفاف محمد وندى</title>
+  
+  <meta name="description" content="يسعدنا أن نشارككم فرحتنا في حفل زفافنا">
+  <meta name="theme-color" content="#FAF8F5">
+  
+  <meta property="og:title" content="دعوة زفاف محمد وندى">
+  <meta property="og:description" content="يسعدنا أن نشارككم فرحتنا في حفل زفافنا">
+  <meta property="og:type" content="website">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Tajawal:wght@300;400;500;700&family=Montserrat:wght@300;400;500;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- LANGUAGE SWITCHER -->
+  <div class="lang-switcher">
+    <button class="lang-btn" id="langToggleBtn" onclick="toggleLanguage()">English</button>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       OPENING SCREEN
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="opening-screen" id="openingScreen" role="dialog" aria-label="شاشة الترحيب">
+    <div class="opening-content">
+      <div class="opening-ornament fade-up">✦</div>
+      <h1 class="opening-names scale-up"><span class="groom-name">محمد</span> <span class="amp">&amp;</span> <span class="bride-name">ندى</span></h1>
+      <div class="ornament-divider scale-up"></div>
+      <p class="opening-subtitle fade-up" data-i18n="opening-subtitle">يسعدنا أن نشارككم فرحتنا</p>
+      <button class="open-btn fade-up" id="openBtn" aria-label="افتح الدعوة">
+        <span data-i18n="open-btn">افتح الدعوة</span>
+      </button>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       MUSIC CONTROL
+       ═══════════════════════════════════════════════════════════ -->
+  <button class="music-control" id="musicControl" aria-label="تشغيل أو إيقاف الموسيقى">
+    <span class="music-icon" id="musicIcon">♪</span>
+  </button>
+  <audio id="bgMusic" loop preload="auto">
+    <source src="assets/music/wedding.mp3" type="audio/mpeg">
+  </audio>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       MAIN CONTENT
+       ═══════════════════════════════════════════════════════════ -->
+  <main id="mainContent" class="main-content hidden">
+
+    <!-- HERO SECTION -->
+    <section class="hero" id="hero" style="background-image: url('assets/images/hero.jpg')">
+      <div class="hero-overlay"></div>
+      <div class="hero-content fade-up">
+        <p class="hero-subtitle" data-i18n="hero-subtitle">دعوة زفاف</p>
+        <h1 class="hero-names"><span class="groom-name">محمد</span> <span class="amp">&amp;</span> <span class="bride-name">ندى</span></h1>
+        <div class="hero-divider"></div>
+        <p class="hero-date"></p>
+      </div>
+    </section>
+
+
+    <!-- WEDDING DETAILS (UPDATED FOR HENNA & WEDDING) -->
+    <section class="details" id="details">
+      <div class="container">
+        <h2 class="section-title fade-up" data-i18n="details-title">تفاصيل الحفل</h2>
+        <div class="events-container">
+          
+          <!-- HENNA CARD -->
+          <div class="event-card fade-right">
+            <div class="icon">🌸</div>
+            <h3 data-i18n="henna-title">يوم الحنة</h3>
+            <p class="event-date henna-date-text">الخميس ٣ / ٩</p>
+            <p class="event-location henna-location-text">في بيت العروسة</p>
+          </div>
+          
+          <!-- WEDDING CARD -->
+          <div class="event-card fade-left">
+            <div class="icon">💍</div>
+            <h3 data-i18n="wedding-title">حفل الزفاف</h3>
+            <p class="event-date wedding-date-text">الجمعة ٤ / ٩</p>
+            <p class="event-time wedding-time-text">من ٥ ل ٨ مساءً</p>
+            <p class="event-location wedding-venue-text">قاعة إيزابيلا - أمام بنزينة الحصري</p>
+          </div>
+
+        </div>
+        <div class="details-cta fade-up">
+          <a href="#" class="map-btn map-link" target="_blank" rel="noopener noreferrer" data-i18n="map-btn">
+            موقع حفل الزفاف على الخريطة
+          </a>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- COUNTDOWN -->
+    <section class="countdown" id="countdown">
+      <div class="container">
+        <h2 class="section-title fade-up" data-i18n="countdown-title">العد التنازلي للزفاف</h2>
+        <div class="countdown-grid fade-up">
+          <div class="countdown-item scale-up">
+            <span class="countdown-number" id="days">00</span>
+            <span class="countdown-label" data-i18n="days">يوم</span>
+          </div>
+          <div class="countdown-item scale-up">
+            <span class="countdown-number" id="hours">00</span>
+            <span class="countdown-label" data-i18n="hours">ساعة</span>
+          </div>
+          <div class="countdown-item scale-up">
+            <span class="countdown-number" id="minutes">00</span>
+            <span class="countdown-label" data-i18n="minutes">دقيقة</span>
+          </div>
+          <div class="countdown-item scale-up">
+            <span class="countdown-number" id="seconds">00</span>
+            <span class="countdown-label" data-i18n="seconds">ثانية</span>
+          </div>
+        </div>
+        <p class="countdown-complete fade-up" id="countdownComplete" data-i18n="countdown-complete">اليوم هو يوم فرحتنا</p>
+      </div>
+    </section>
+
+
+    <!-- OUR STORY -->
+    <section class="story" id="story">
+      <div class="container">
+        <h2 class="section-title fade-up" data-i18n="story-title">قصتنا</h2>
+        <div class="story-content">
+          <div class="story-image-wrapper fade-right">
+            <img src="assets/images/couple.jpg" alt="" class="story-image" loading="lazy">
+          </div>
+          <div class="story-text fade-left">
+            <p class="story-p1">في لحظة لم نكن نتوقعها، جمعنا القدر ليبدأ فصل جديد من حياتنا معاً. من أول نظرة إلى هذا اليوم، كانت رحلتنا مليئة بالحب والأمل والأحلام المشتركة.</p>
+            <p class="story-p2">واليوم، نبدأ حكاية جديدة... ونسعد بمشاركتكم هذه اللحظة.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VENUE (BOTTOM) -->
+    <section class="venue" id="venue" style="background-image: url('assets/images/venue.jpg')">
+      <div class="venue-overlay"></div>
+      <div class="venue-content scale-up">
+        <h2 class="section-title light" data-i18n="venue-title">مكان الزفاف</h2>
+        <h3 class="venue-name venue-title-text">قاعة إيزابيلا</h3>
+        <p class="venue-address venue-address-text">أمام بنزينة الحصري</p>
+        <p class="venue-datetime"></p>
+        <a href="#" class="venue-btn map-link" target="_blank" rel="noopener noreferrer" data-i18n="venue-btn">افتح الموقع</a>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       FOOTER
+       ═══════════════════════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-ornament fade-up">✦</div>
+      <h3 class="footer-names scale-up"><span class="groom-name">محمد</span> <span class="amp">&amp;</span> <span class="bride-name">ندى</span></h3>
+      <p class="footer-message fade-up" data-i18n="footer-msg">بكل الحب ننتظركم لنشارككم أجمل لحظاتنا</p>
+      <div class="footer-ornament fade-up">✦</div>
+      <p class="footer-copyright fade-up">
+        <span data-i18n="footer-copy">صُنع بكل حب 💛</span>
+        <br>
+        <a href="admin.html" style="opacity: 0.3; text-decoration: none; font-size: 1.2rem; margin-top: 5px; display: inline-block;" title="لوحة التحكم">⚙️</a>
+      </p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
