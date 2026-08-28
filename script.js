@@ -4,7 +4,7 @@
 const DEFAULT_CONFIG = {
     // Arabic Config
     groomName: 'إبراهيم',
-    brideName: 'منه',
+    brideName: 'منة الله',
     
     // Henna
     henMennate: 'الخميس ٣ / ٩',
@@ -22,7 +22,7 @@ const DEFAULT_CONFIG = {
     
     // English Config
     groomNameEn: 'Ibrahim',
-    brideNameEn: 'Menna',
+    brideNameEn: 'Menna Allah',
     
     // Henna En
     henMennateEn: 'Thursday, Sept 3',

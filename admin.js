@@ -67,13 +67,13 @@ async function uploadFileToServer(endpoint, file) {
 
 // Default Data Fallbacks
 const DEFAULT_CONFIG = {
-    groomName: 'إبراهيم', brideName: 'منه',
+    groomName: 'إبراهيم', brideName: 'منة الله',
     henMennate: 'الخميس ٣ / ٩', hennaLocation: 'في بيت العروسة',
     weddingDay: 'يوم الجمعة', weddingDateArabic: 'الموافق ٤ / ٩',
     weddingTime: 'من ٥ ل ٨ مساءً', venueName: 'قاعة إيزابيلا', venueAddress: 'أمام بنزينة الحصري',
     storyText1: 'في لحظة لم نكن نتوقعها، جمعنا القدر ليبدأ فصل جديد من حياتنا معاً. من أول نظرة إلى هذا اليوم، كانت رحلتنا مليئة بالحب والأمل والأحلام المشتركة.',
     storyText2: 'واليوم، نبدأ حكاية جديدة... ونسعد بمشاركتكم هذه اللحظة.',
-    groomNameEn: 'Ibrahim', brideNameEn: 'Menna',
+    groomNameEn: 'Ibrahim', brideNameEn: 'Menna Allah',
     henMennateEn: 'Thursday, Sept 3', hennaLocationEn: 'At the Bride\'s House',
     weddingDayEn: 'Friday', weddingDateEn: 'September 4',
     weddingTimeEn: '5:00 PM to 8:00 PM', venueNameEn: 'Isabella Hall', venueAddressEn: 'In front of El Hosary Gas Station',
