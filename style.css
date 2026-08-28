@@ -502,7 +502,8 @@ html[lang="en"] .music-control {
 
 .countdown-item {
   background: var(--color-white);
-  width: 75px;
+  min-width: 75px;
+  padding: 0 5px;
   height: 85px;
   display: flex;
   flex-direction: column;
@@ -862,6 +863,15 @@ html[lang="en"] .fade-left {
   100% { transform: translateX(50%); }
 }
 
+html[lang="en"] .marquee-track {
+  animation-name: scroll-marquee-en;
+}
+
+@keyframes scroll-marquee-en {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
 
 /* ==========================================================================
    14. RESPONSIVE DESIGN
@@ -930,7 +940,8 @@ html[lang="en"] .fade-left {
   }
 
   .countdown-item {
-    width: 65px;
+    min-width: 65px;
+    padding: 0 3px;
     height: 75px;
   }
 
@@ -993,6 +1004,16 @@ html[lang="en"] .fade-left {
   html[lang="en"] .music-control {
     left: auto;
     right: 1rem;
+  }
+
+  /* Fix box animations on mobile (prevent horizontal overflow) */
+  .fade-right, .fade-left,
+  html[lang="en"] .fade-right, html[lang="en"] .fade-left {
+    transform: translateY(30px);
+  }
+  .fade-right.visible, .fade-left.visible,
+  html[lang="en"] .fade-right.visible, html[lang="en"] .fade-left.visible {
+    transform: translateY(0);
   }
 
   .lang-btn {
