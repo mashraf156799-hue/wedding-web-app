@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
@@ -16,13 +16,13 @@
       background: var(--bg);
       color: var(--text);
       margin: 0;
-      padding: 2rem;
+      padding: 1rem;
     }
     .container {
       max-width: 800px;
       margin: 0 auto;
       background: #fff;
-      padding: 2rem;
+      padding: 1.5rem;
       border-radius: 12px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.05);
     }
@@ -30,6 +30,7 @@
       text-align: center;
       color: var(--primary);
       margin-bottom: 2rem;
+      font-size: 1.4rem;
     }
     .section {
       background: #fafafa;
@@ -41,7 +42,7 @@
     .section h2 {
       margin-top: 0;
       color: var(--text);
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       border-bottom: 2px solid var(--primary);
       display: inline-block;
       padding-bottom: 0.3rem;
@@ -56,22 +57,30 @@
     .form-group.full {
       grid-template-columns: 1fr;
     }
+    @media (max-width: 600px) {
+      .form-group {
+        grid-template-columns: 1fr;
+      }
+    }
     label {
       display: block;
       font-weight: 500;
       margin-bottom: 0.4rem;
+      font-size: 0.9rem;
     }
     input[type="text"], input[type="datetime-local"], textarea {
       width: 100%;
-      padding: 0.8rem;
+      padding: 0.7rem;
       border: 1px solid #ddd;
       border-radius: 6px;
       font-family: inherit;
       box-sizing: border-box;
+      font-size: 0.9rem;
     }
     input[type="file"] {
       display: block;
       margin-top: 0.5rem;
+      font-size: 0.85rem;
     }
     .btn {
       background: var(--primary);
@@ -88,6 +97,10 @@
     }
     .btn:hover {
       opacity: 0.9;
+    }
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
     }
     .link-btn {
       display: block;
@@ -107,18 +120,39 @@
       border-radius: 8px;
       display: none;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      z-index: 9999;
+      font-size: 0.95rem;
+    }
+    .toast.error {
+      background: #e74c3c;
     }
     .preview-img {
-      max-width: 200px;
+      max-width: 150px;
       margin-top: 10px;
       border-radius: 8px;
+    }
+    .save-status {
+      text-align: center;
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--primary);
+    }
+    .marquee-previews {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-top: 0.5rem;
+    }
+    .marquee-previews img {
+      max-width: 100px;
+      border-radius: 6px;
     }
   </style>
 </head>
 <body>
 
   <div id="loginScreen" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 9999; display: flex; align-items: center; justify-content: center; flex-direction: column;">
-    <div style="background: white; padding: 3rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: center; max-width: 400px; width: 90%;">
+    <div style="background: white; padding: 2.5rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: center; max-width: 400px; width: 90%;">
       <h2 style="color: var(--primary); margin-bottom: 1.5rem;">لوحة التحكم</h2>
       <input type="text" id="adminUser" placeholder="اسم المستخدم" style="width: 100%; padding: 0.8rem; margin-bottom: 1rem; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; font-family: inherit;">
       <input type="password" id="adminPass" placeholder="كلمة المرور" style="width: 100%; padding: 0.8rem; margin-bottom: 1rem; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; font-family: inherit;">
@@ -161,11 +195,11 @@
       <div class="form-group">
         <div>
           <label>التاريخ (عربي) - مثلا: الخميس ٣ / ٩</label>
-          <input type="text" id="hennaDate">
+          <input type="text" id="henMennate">
         </div>
         <div>
           <label>Date (English) - e.g: Thursday, Sept 3</label>
-          <input type="text" id="hennaDateEn">
+          <input type="text" id="henMennateEn">
         </div>
       </div>
       <div class="form-group">
@@ -280,13 +314,25 @@
         <img id="venuePreview" class="preview-img">
       </div>
       <div class="form-group full">
+        <label>صور المعرض (Gallery / Marquee) - اختر حتى 3 صور</label>
+        <input type="file" id="marquee1Input" accept="image/*">
+        <input type="file" id="marquee2Input" accept="image/*">
+        <input type="file" id="marquee3Input" accept="image/*">
+        <div class="marquee-previews">
+          <img id="marquee1Preview" class="preview-img" style="display:none">
+          <img id="marquee2Preview" class="preview-img" style="display:none">
+          <img id="marquee3Preview" class="preview-img" style="display:none">
+        </div>
+      </div>
+      <div class="form-group full">
         <label>موسيقى الخلفية (Background Music)</label>
         <input type="file" id="musicInput" accept="audio/*">
         <audio id="musicPreview" controls style="margin-top:10px; width:100%; display:none;"></audio>
       </div>
     </div>
 
-    <button class="btn" onclick="saveAll()">حفظ التعديلات | Save Changes</button>
+    <button class="btn" id="saveBtn" onclick="saveAll()">حفظ التعديلات | Save Changes</button>
+    <p class="save-status" id="saveStatus"></p>
     <a href="index.html" class="link-btn">رجوع للدعوة | Back to Invitation</a>
   </div>
 

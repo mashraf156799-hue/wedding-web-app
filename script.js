@@ -1,4 +1,4 @@
-﻿// ═══════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════════
 // WEDDING CONFIGURATION (DEFAULT FALLBACK)
 // ═══════════════════════════════════════════════════════════════
 const DEFAULT_CONFIG = {
@@ -40,10 +40,13 @@ const DEFAULT_CONFIG = {
 
     // General Config
     weddingDate: '2026-09-04T17:00:00',
-    googleMapsURL: 'https://maps.google.com/?q=Isabella+Hall',
+    googleMapsURL: 'https://maps.app.goo.gl/eGmUGw2Yaa2mb5wZ6',
 };
 
 let WEDDING_CONFIG = { ...DEFAULT_CONFIG };
+
+// Module-level variable to store loaded images data
+let loadedImages = null;
 
 // ═══════════════════════════════════════════════════════════════
 // MULTILINGUAL (i18n) DICTIONARY
@@ -125,18 +128,36 @@ async function getDB(key) {
 // ═══════════════════════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', async () => {
     try {
+        // Try loading config from config.json file first (works across devices)
+        let fileConfig = null;
+        try {
+            const resp = await fetch('config.json');
+            if (resp.ok) {
+                fileConfig = await resp.json();
+            }
+        } catch (e) {
+            // config.json not available, will try IndexedDB
+        }
+
+        // Try IndexedDB as fallback
         const savedConfig = await getDB('weddingConfig');
         const savedImages = await getDB('weddingImages');
         const savedMusic = await getDB('weddingMusic');
-        
-        if (savedConfig) {
-            // Fix cached 2025 date to 2026 so countdown works
+
+        // Priority: fileConfig > savedConfig > DEFAULT_CONFIG
+        if (fileConfig) {
+            WEDDING_CONFIG = { ...DEFAULT_CONFIG, ...fileConfig };
+        } else if (savedConfig) {
             if (savedConfig.weddingDate === '2025-09-04T17:00:00' || savedConfig.weddingDate === '2025-08-15T20:00:00') {
                 savedConfig.weddingDate = '2026-09-04T17:00:00';
             }
             WEDDING_CONFIG = { ...DEFAULT_CONFIG, ...savedConfig };
         }
-        if (savedImages) applyImagesToHTML(savedImages);
+
+        // Store images data at module level for use by initMarquee
+        loadedImages = savedImages || null;
+
+        if (loadedImages) applyImagesToHTML(loadedImages);
         if (savedMusic) {
             const audioEl = document.getElementById('bgMusic');
             if (audioEl) audioEl.src = savedMusic;
@@ -148,10 +169,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 function initWeddingApp() {
-    applyLanguage(); // This calls applyConfigToHTML
+    applyLanguage();
     initOpeningScreen();
     initMusicControl();
-    initScrollAnimations(); initMarquee(savedImages);
+    initScrollAnimations();
+    initMarquee();
     initSmoothScroll();
     initHeroParallax();
 }
@@ -227,7 +249,7 @@ function applyConfigToHTML() {
 }
 
 // ═══════════════════════════════════════════════════════════════
-// OPENING SCREEN
+// OPENING SCREEN (Professional Fade Transition)
 // ═══════════════════════════════════════════════════════════════
 function initOpeningScreen() {
     const openingScreen = document.getElementById('openingScreen');
@@ -243,17 +265,36 @@ function initOpeningScreen() {
     }
 
     openBtn.addEventListener('click', () => {
-        openingScreen.classList.add('hidden');
-        mainContent.classList.remove('hidden');
-        
-        // Retrigger animations on main content load for better effect
-        setTimeout(() => {
-            initScrollAnimations(); initMarquee(savedImages);
-        }, 100);
+        // Step 1: Fade out opening screen
+        openingScreen.classList.add('fade-out');
 
-        if (musicControl) {
-            musicControl.style.display = 'flex';
-        }
+        // Step 2: After opening screen fades out, reveal main content
+        openingScreen.addEventListener('transitionend', function handler(e) {
+            if (e.propertyName !== 'opacity') return;
+            openingScreen.removeEventListener('transitionend', handler);
+
+            // Make main content visible with fade-in
+            mainContent.classList.remove('hidden');
+            // Force a reflow so the transition triggers
+            void mainContent.offsetHeight;
+            mainContent.classList.add('visible');
+
+            // Show music control
+            if (musicControl) {
+                musicControl.style.display = 'flex';
+            }
+
+            // Trigger scroll animations and marquee after content is visible
+            setTimeout(() => {
+                initScrollAnimations();
+                initMarquee();
+            }, 100);
+
+            // Start countdown
+            initCountdown();
+        });
+
+        // Play music
         if (bgMusic) {
             bgMusic.play().then(() => {
                 if (musicControl) musicControl.classList.add('playing');
@@ -261,7 +302,6 @@ function initOpeningScreen() {
                 console.warn('Music autoplay blocked:', err.message);
             });
         }
-        initCountdown();
     });
 }
 
@@ -290,7 +330,6 @@ function initMusicControl() {
 // ═══════════════════════════════════════════════════════════════
 function initCountdown() {
     let cDate = new Date(WEDDING_CONFIG.weddingDate);
-    // If date is invalid or in the past (by more than a day), automatically push it to next year so the user sees a working timer.
     if (isNaN(cDate.getTime()) || cDate.getTime() < new Date().getTime() - 86400000) {
         cDate.setFullYear(new Date().getFullYear() + 1);
     }
@@ -337,19 +376,16 @@ function initCountdown() {
 // SCROLL ANIMATIONS (Intersection Observer)
 // ═══════════════════════════════════════════════════════════════
 function initScrollAnimations() {
-    // Collect all elements with animation classes
     const animatedElements = document.querySelectorAll('.fade-up, .fade-right, .fade-left, .scale-up');
 
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
-                // Optional: Unobserve after revealing to animate only once
-                // observer.unobserve(entry.target); 
             }
         });
     }, {
-        threshold: 0.15, // Trigger a bit later for a smoother feel
+        threshold: 0.15,
         rootMargin: '0px 0px -50px 0px'
     });
 
@@ -397,17 +433,19 @@ function initHeroParallax() {
     }, { passive: true });
 }
 
-// MARQUEE INIT
-function initMarquee(savedImages) {
+// ═══════════════════════════════════════════════════════════════
+// MARQUEE GALLERY
+// ═══════════════════════════════════════════════════════════════
+function initMarquee() {
     const track = document.getElementById('marqueeTrack');
     const section = document.getElementById('marqueeGallery');
     if (!track || !section) return;
 
     let images = [];
-    if (savedImages && (savedImages.marquee1 || savedImages.marquee2 || savedImages.marquee3)) {
-        if (savedImages.marquee1) images.push(savedImages.marquee1);
-        if (savedImages.marquee2) images.push(savedImages.marquee2);
-        if (savedImages.marquee3) images.push(savedImages.marquee3);
+    if (loadedImages && (loadedImages.marquee1 || loadedImages.marquee2 || loadedImages.marquee3)) {
+        if (loadedImages.marquee1) images.push(loadedImages.marquee1);
+        if (loadedImages.marquee2) images.push(loadedImages.marquee2);
+        if (loadedImages.marquee3) images.push(loadedImages.marquee3);
     } else {
         // Defaults
         images = [

@@ -54,6 +54,7 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  max-width: 100vw;
 }
 
 /* Language toggle support */
@@ -95,10 +96,10 @@ a {
 
 .section-title {
   font-family: var(--font-arabic-serif);
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   text-align: center;
   color: var(--color-text-primary);
-  margin-bottom: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
   position: relative;
 }
 
@@ -117,24 +118,24 @@ a {
 
 .lang-switcher {
   position: fixed;
-  top: 20px;
-  right: 20px;
+  top: 15px;
+  right: 15px;
   z-index: 1001;
 }
 
 html[lang="en"] .lang-switcher {
   right: auto;
-  left: 20px;
+  left: 15px;
 }
 
 .lang-btn {
   background: rgba(255, 255, 255, 0.9);
   color: var(--color-gold-dark);
   border: 1px solid var(--color-gold-light);
-  padding: 0.5rem 1rem;
+  padding: 0.4rem 0.9rem;
   border-radius: 20px;
   font-family: var(--font-arabic-sans);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   cursor: pointer;
   box-shadow: 0 4px 10px rgba(0,0,0,0.05);
   transition: all var(--transition-fast);
@@ -146,7 +147,7 @@ html[lang="en"] .lang-switcher {
 }
 
 /* ==========================================================================
-   2. OPENING SCREEN
+   2. OPENING SCREEN - Professional Fade Transition
    ========================================================================== */
 .opening-screen {
   position: fixed;
@@ -154,14 +155,20 @@ html[lang="en"] .lang-switcher {
   left: 0;
   width: 100%;
   height: 100vh;
+  height: 100dvh;
   background: linear-gradient(135deg, #FAF8F5 0%, #F5F0EB 100%);
   z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1), visibility 1.2s;
-  /* Subtle pattern overlay */
+  transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s linear 0s;
   background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23b8976a' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+.opening-screen.fade-out {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s linear 1.2s;
 }
 
 .opening-content {
@@ -178,7 +185,7 @@ html[lang="en"] .lang-switcher {
 
 .opening-names {
   font-family: var(--font-arabic-serif);
-  font-size: 3.5rem;
+  font-size: 3rem;
   color: var(--color-gold-dark);
   margin-bottom: 1rem;
   line-height: 1.2;
@@ -186,7 +193,7 @@ html[lang="en"] .lang-switcher {
 
 .opening-names .amp {
   font-family: var(--font-english-display);
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   color: var(--color-gold-light);
   display: inline-block;
   margin: 0 0.5rem;
@@ -220,8 +227,8 @@ html[lang="en"] .lang-switcher {
 .opening-subtitle {
   font-family: var(--font-arabic-sans);
   color: var(--color-text-muted);
-  font-size: 1.1rem;
-  margin-bottom: 3rem;
+  font-size: 1rem;
+  margin-bottom: 2.5rem;
   letter-spacing: 0.5px;
   font-weight: 300;
 }
@@ -230,9 +237,9 @@ html[lang="en"] .lang-switcher {
   background: transparent;
   border: 1px solid var(--color-gold-main);
   color: var(--color-gold-dark);
-  padding: 1rem 3rem;
+  padding: 0.9rem 2.5rem;
   font-family: var(--font-arabic-sans);
-  font-size: 1.1rem;
+  font-size: 1rem;
   border-radius: 30px;
   cursor: pointer;
   transition: all var(--transition-medium);
@@ -278,10 +285,10 @@ html[lang="en"] .open-btn:hover::before {
    ========================================================================== */
 .music-control {
   position: fixed;
-  bottom: 2rem;
-  left: 2rem; /* visually right in RTL */
-  width: 44px;
-  height: 44px;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   background: rgba(44, 36, 32, 0.4);
   backdrop-filter: blur(8px);
@@ -298,7 +305,7 @@ html[lang="en"] .open-btn:hover::before {
 
 html[lang="en"] .music-control {
   left: auto;
-  right: 2rem;
+  right: 1.5rem;
 }
 
 .music-control:hover {
@@ -307,7 +314,7 @@ html[lang="en"] .music-control {
 }
 
 .music-icon {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   line-height: 1;
   opacity: 0.6;
 }
@@ -323,10 +330,11 @@ html[lang="en"] .music-control {
    ========================================================================== */
 .hero {
   min-height: 100vh;
+  min-height: 100dvh;
   position: relative;
   background-size: cover;
   background-position: center;
-  background-attachment: scroll; /* Changed by JS for parallax on desktop */
+  background-attachment: scroll;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -346,29 +354,29 @@ html[lang="en"] .music-control {
 .hero-content {
   position: relative;
   z-index: 2;
-  padding: 2rem;
+  padding: 1.5rem;
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 .hero-subtitle {
   font-family: var(--font-arabic-sans);
-  font-size: 1.2rem;
+  font-size: 1rem;
   letter-spacing: 2px;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   font-weight: 300;
   color: var(--color-gold-light);
 }
 
 .hero-names {
   font-family: var(--font-arabic-serif);
-  font-size: 4.5rem;
+  font-size: 2.8rem;
   line-height: 1.1;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .hero-names .amp {
   font-family: var(--font-english-display);
-  font-size: 3rem;
+  font-size: 2rem;
   color: var(--color-gold-light);
   font-weight: 300;
 }
@@ -377,12 +385,12 @@ html[lang="en"] .music-control {
   width: 40px;
   height: 2px;
   background: var(--color-gold-main);
-  margin: 0 auto 1.5rem;
+  margin: 0 auto 1rem;
 }
 
 .hero-date {
   font-family: var(--font-arabic-sans);
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   letter-spacing: 1px;
   color: rgba(255, 255, 255, 0.9);
   font-weight: 300;
@@ -393,7 +401,7 @@ html[lang="en"] .music-control {
    5. WEDDING DETAILS
    ========================================================================== */
 .details {
-  padding: var(--spacing-xl) 0;
+  padding: var(--spacing-lg) 0;
   background-color: var(--color-bg-primary);
   background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23b8976a' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
@@ -401,24 +409,13 @@ html[lang="en"] .music-control {
 .events-container {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md);
+  gap: 1.5rem;
   margin-bottom: var(--spacing-md);
-}
-
-@media (min-width: 768px) {
-  .events-container {
-    flex-direction: row;
-    justify-content: center;
-  }
-  .event-card {
-    flex: 1;
-    max-width: 400px;
-  }
 }
 
 .event-card {
   background: var(--color-white);
-  padding: 2.5rem 1.5rem;
+  padding: 2rem 1.5rem;
   border-radius: 20px;
   text-align: center;
   box-shadow: var(--shadow-subtle);
@@ -432,48 +429,48 @@ html[lang="en"] .music-control {
 }
 
 .event-card .icon {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
+  font-size: 2.2rem;
+  margin-bottom: 0.8rem;
   display: block;
   filter: grayscale(10%) sepia(20%);
 }
 
 .event-card h3 {
   font-family: var(--font-arabic-serif);
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   color: var(--color-gold-dark);
-  margin-bottom: 1rem;
+  margin-bottom: 0.8rem;
   font-weight: 700;
 }
 
 .event-card p {
   font-family: var(--font-arabic-sans);
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: var(--color-text-primary);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
   font-weight: 500;
 }
 
 .event-card .event-location {
   color: var(--color-text-muted);
   font-weight: 300;
-  font-size: 0.95rem;
-  margin-top: 0.8rem;
+  font-size: 0.9rem;
+  margin-top: 0.6rem;
 }
 
 .details-cta {
   text-align: center;
-  margin-top: var(--spacing-lg);
+  margin-top: var(--spacing-md);
 }
 
 .map-btn {
   display: inline-block;
   background: var(--color-gold-main);
   color: var(--color-white);
-  padding: 1rem 3rem;
+  padding: 0.9rem 2rem;
   border-radius: 30px;
   font-family: var(--font-arabic-sans);
-  font-size: 1.1rem;
+  font-size: 1rem;
   transition: all var(--transition-medium);
   box-shadow: 0 4px 15px rgba(184, 151, 106, 0.2);
 }
@@ -489,7 +486,7 @@ html[lang="en"] .music-control {
    6. COUNTDOWN
    ========================================================================== */
 .countdown {
-  padding: var(--spacing-xl) 0;
+  padding: var(--spacing-lg) 0;
   background-color: var(--color-bg-secondary);
   text-align: center;
 }
@@ -498,15 +495,15 @@ html[lang="en"] .music-control {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 1.5rem;
-  max-width: 600px;
+  gap: 1rem;
+  max-width: 500px;
   margin: 0 auto;
 }
 
 .countdown-item {
   background: var(--color-white);
-  width: 90px;
-  height: 100px;
+  width: 75px;
+  height: 85px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -518,7 +515,7 @@ html[lang="en"] .music-control {
 
 .countdown-number {
   font-family: var(--font-arabic-serif);
-  font-size: 2.2rem;
+  font-size: 1.8rem;
   color: var(--color-gold-dark);
   line-height: 1;
   margin-bottom: 0.3rem;
@@ -526,14 +523,14 @@ html[lang="en"] .music-control {
 
 .countdown-label {
   font-family: var(--font-arabic-sans);
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   color: var(--color-text-muted);
 }
 
 .countdown-complete {
   display: none;
   font-family: var(--font-arabic-serif);
-  font-size: 2rem;
+  font-size: 1.6rem;
   color: var(--color-gold-main);
   margin-top: 2rem;
 }
@@ -543,7 +540,7 @@ html[lang="en"] .music-control {
    7. OUR STORY
    ========================================================================== */
 .story {
-  padding: var(--spacing-xl) 0;
+  padding: var(--spacing-lg) 0;
   background-color: var(--color-bg-primary);
 }
 
@@ -553,13 +550,13 @@ html[lang="en"] .music-control {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--spacing-lg);
+  gap: var(--spacing-md);
 }
 
 .story-image-wrapper {
   position: relative;
   width: 100%;
-  max-width: 400px;
+  max-width: 280px;
   border-radius: 200px 200px 0 0;
   overflow: hidden;
   box-shadow: var(--shadow-subtle);
@@ -587,14 +584,15 @@ html[lang="en"] .music-control {
 .story-text {
   text-align: center;
   max-width: 600px;
+  padding: 0 1rem;
 }
 
 .story-text p {
   font-family: var(--font-arabic-sans);
-  font-size: 1.15rem;
+  font-size: 1rem;
   color: var(--color-text-primary);
   line-height: 2;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.2rem;
   font-weight: 300;
 }
 
@@ -604,10 +602,10 @@ html[lang="en"] .music-control {
    ========================================================================== */
 .venue {
   position: relative;
-  padding: var(--spacing-xl) 0;
+  padding: var(--spacing-lg) 0;
   background-size: cover;
   background-position: center;
-  background-attachment: fixed;
+  background-attachment: scroll;
   text-align: center;
   color: var(--color-white);
 }
@@ -631,22 +629,22 @@ html[lang="en"] .music-control {
 
 .venue-name {
   font-family: var(--font-arabic-serif);
-  font-size: 2.5rem;
+  font-size: 2rem;
   color: var(--color-gold-main);
   margin-bottom: 0.5rem;
 }
 
 .venue-address {
   font-family: var(--font-arabic-sans);
-  font-size: 1.2rem;
-  margin-bottom: 1.5rem;
+  font-size: 1rem;
+  margin-bottom: 1rem;
   opacity: 0.9;
 }
 
 .venue-datetime {
   font-family: var(--font-arabic-sans);
-  font-size: 1rem;
-  margin-bottom: 2.5rem;
+  font-size: 0.9rem;
+  margin-bottom: 2rem;
   color: rgba(255, 255, 255, 0.8);
   font-weight: 300;
 }
@@ -656,10 +654,10 @@ html[lang="en"] .music-control {
   background: transparent;
   color: var(--color-white);
   border: 1px solid var(--color-gold-main);
-  padding: 1rem 3rem;
+  padding: 0.9rem 2.5rem;
   border-radius: 30px;
   font-family: var(--font-arabic-sans);
-  font-size: 1.1rem;
+  font-size: 1rem;
   transition: all var(--transition-medium);
 }
 
@@ -676,20 +674,20 @@ html[lang="en"] .music-control {
   background: var(--color-text-primary);
   color: var(--color-bg-secondary);
   text-align: center;
-  padding: var(--spacing-lg) 0 var(--spacing-md);
+  padding: var(--spacing-md) 0 var(--spacing-sm);
   overflow: hidden;
 }
 
 .footer-ornament {
   color: var(--color-gold-dark);
-  font-size: 1.2rem;
+  font-size: 1rem;
   opacity: 0.35;
   margin: var(--spacing-sm) 0;
 }
 
 .footer-names {
   font-family: var(--font-arabic-serif);
-  font-size: 2.4rem;
+  font-size: 2rem;
   color: var(--color-gold-light);
   margin-bottom: 0.3rem;
 }
@@ -697,22 +695,22 @@ html[lang="en"] .music-control {
 .footer-names .amp {
   font-family: var(--font-english-display);
   font-weight: 300;
-  font-size: 2rem;
+  font-size: 1.6rem;
 }
 
 .footer-message {
   font-family: var(--font-arabic-sans);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   opacity: 0.6;
   letter-spacing: 0.5px;
   font-weight: 300;
-  max-width: 400px;
+  max-width: 350px;
   margin: 0 auto;
   line-height: 1.8;
 }
 
 .footer-copyright {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   opacity: 0.35;
   margin-top: var(--spacing-sm);
   font-weight: 300;
@@ -724,8 +722,8 @@ html[lang="en"] .music-control {
    ========================================================================== */
 .fade-up {
   opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 1s cubic-bezier(0.25, 0.8, 0.25, 1), transform 1s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .fade-up.visible {
@@ -735,12 +733,12 @@ html[lang="en"] .music-control {
 
 .fade-right {
   opacity: 0;
-  transform: translateX(40px); /* RTL: moves from right visually */
-  transition: opacity 1.2s cubic-bezier(0.25, 0.8, 0.25, 1), transform 1.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transform: translateX(30px);
+  transition: opacity 1s cubic-bezier(0.25, 0.8, 0.25, 1), transform 1s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 html[lang="en"] .fade-right {
-  transform: translateX(-40px);
+  transform: translateX(-30px);
 }
 
 .fade-right.visible {
@@ -750,12 +748,12 @@ html[lang="en"] .fade-right {
 
 .fade-left {
   opacity: 0;
-  transform: translateX(-40px); /* RTL: moves from left visually */
-  transition: opacity 1.2s cubic-bezier(0.25, 0.8, 0.25, 1), transform 1.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transform: translateX(-30px);
+  transition: opacity 1s cubic-bezier(0.25, 0.8, 0.25, 1), transform 1s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 html[lang="en"] .fade-left {
-  transform: translateX(40px);
+  transform: translateX(30px);
 }
 
 .fade-left.visible {
@@ -765,8 +763,8 @@ html[lang="en"] .fade-left {
 
 .scale-up {
   opacity: 0;
-  transform: scale(0.9);
-  transition: opacity 1s cubic-bezier(0.25, 0.8, 0.25, 1), transform 1s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transform: scale(0.92);
+  transition: opacity 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .scale-up.visible {
@@ -791,7 +789,7 @@ html[lang="en"] .fade-left {
    11. SCROLLBAR
    ========================================================================== */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 ::-webkit-scrollbar-track {
   background: var(--color-bg-primary);
@@ -806,71 +804,27 @@ html[lang="en"] .fade-left {
 
 
 /* ==========================================================================
-   12. RESPONSIVE DESIGN
+   12. MAIN CONTENT TRANSITION
    ========================================================================== */
-@media (min-width: 768px) {
-  .section-title {
-    font-size: 3rem;
-  }
-  
-  .hero-names {
-    font-size: 6rem;
-  }
-  
-  .hero-names .amp {
-    font-size: 4rem;
-  }
-  
-  .story-content {
-    flex-direction: row;
-    align-items: center;
-  }
-  
-  .story-text {
-    text-align: right;
-    padding-right: 3rem;
-  }
-  
-  html[lang="en"] .story-text {
-    text-align: left;
-    padding-right: 0;
-    padding-left: 3rem;
-  }
-  
-  .countdown-item {
-    width: 110px;
-    height: 120px;
-  }
-  
-  .countdown-number {
-    font-size: 3rem;
-  }
+.main-content {
+  opacity: 0;
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
 }
 
-@media (min-width: 1024px) {
-  .hero-names {
-    font-size: 7rem;
-  }
-  
-  .music-control {
-    width: 50px;
-    height: 50px;
-    bottom: 3rem;
-    left: 3rem;
-  }
-  html[lang="en"] .music-control {
-    left: auto;
-    right: 3rem;
-  }
+.main-content.visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
+
 
 /* ==========================================================================
-   13. MARQUEE GALLERY & ENHANCED TRANSITIONS
+   13. MARQUEE GALLERY
    ========================================================================== */
 .marquee-gallery {
   width: 100%;
   overflow: hidden;
-  padding: var(--spacing-md) 0;
+  padding: var(--spacing-sm) 0;
   background: var(--color-bg-secondary);
   border-top: 1px solid rgba(184, 151, 106, 0.1);
   border-bottom: 1px solid rgba(184, 151, 106, 0.1);
@@ -883,9 +837,9 @@ html[lang="en"] .fade-left {
 }
 
 .marquee-item {
-  width: 250px;
-  height: 350px;
-  margin: 0 10px;
+  width: 180px;
+  height: 250px;
+  margin: 0 8px;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: var(--shadow-subtle);
@@ -905,32 +859,316 @@ html[lang="en"] .fade-left {
 
 @keyframes scroll-marquee {
   0% { transform: translateX(0); }
-  100% { transform: translateX(50%); /* RTL moves positively to go left */ }
+  100% { transform: translateX(50%); }
 }
 
-html[lang="en"] @keyframes scroll-marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); /* LTR moves negatively to go left */ }
+
+/* ==========================================================================
+   14. RESPONSIVE DESIGN
+   ========================================================================== */
+
+/* Small phones (320px - 480px) */
+@media (max-width: 480px) {
+  :root {
+    --spacing-lg: 3rem;
+    --spacing-xl: 4rem;
+  }
+
+  .container {
+    padding: 0 1rem;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+  }
+
+  .opening-names {
+    font-size: 2.4rem;
+  }
+
+  .opening-names .amp {
+    font-size: 1.8rem;
+  }
+
+  .opening-subtitle {
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+  }
+
+  .open-btn {
+    padding: 0.8rem 2rem;
+    font-size: 0.9rem;
+  }
+
+  .hero-names {
+    font-size: 2.4rem;
+  }
+
+  .hero-names .amp {
+    font-size: 1.6rem;
+  }
+
+  .hero-subtitle {
+    font-size: 0.9rem;
+  }
+
+  .hero-date {
+    font-size: 0.95rem;
+  }
+
+  .event-card {
+    padding: 1.5rem 1rem;
+  }
+
+  .event-card h3 {
+    font-size: 1.3rem;
+  }
+
+  .event-card p {
+    font-size: 0.9rem;
+  }
+
+  .countdown-item {
+    width: 65px;
+    height: 75px;
+  }
+
+  .countdown-number {
+    font-size: 1.5rem;
+  }
+
+  .countdown-label {
+    font-size: 0.65rem;
+  }
+
+  .story-image-wrapper {
+    max-width: 220px;
+  }
+
+  .story-text p {
+    font-size: 0.9rem;
+    line-height: 1.9;
+  }
+
+  .venue-name {
+    font-size: 1.6rem;
+  }
+
+  .venue-address {
+    font-size: 0.9rem;
+  }
+
+  .venue-btn {
+    padding: 0.8rem 2rem;
+    font-size: 0.9rem;
+  }
+
+  .footer-names {
+    font-size: 1.6rem;
+  }
+
+  .footer-message {
+    font-size: 0.8rem;
+  }
+
+  .map-btn {
+    padding: 0.8rem 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  .marquee-item {
+    width: 140px;
+    height: 200px;
+    margin: 0 6px;
+  }
+
+  .music-control {
+    width: 38px;
+    height: 38px;
+    bottom: 1rem;
+    left: 1rem;
+  }
+
+  html[lang="en"] .music-control {
+    left: auto;
+    right: 1rem;
+  }
+
+  .lang-btn {
+    padding: 0.35rem 0.7rem;
+    font-size: 0.75rem;
+  }
 }
 
-/* Enhanced Opening Transition */
-.opening-screen {
-  transition: transform 1.5s cubic-bezier(0.77, 0, 0.175, 1), opacity 1.5s cubic-bezier(0.77, 0, 0.175, 1), visibility 1.5s;
+/* Tablets and larger phones */
+@media (min-width: 481px) and (max-width: 767px) {
+  .opening-names {
+    font-size: 2.8rem;
+  }
+
+  .hero-names {
+    font-size: 3.2rem;
+  }
+
+  .countdown-item {
+    width: 80px;
+    height: 90px;
+  }
 }
 
-.opening-screen.hidden {
-  transform: translateY(-100%); /* Slides up like a curtain */
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
+/* Tablets and up */
+@media (min-width: 768px) {
+  .section-title {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .opening-names {
+    font-size: 3.5rem;
+  }
+
+  .hero-names {
+    font-size: 5rem;
+  }
+
+  .hero-names .amp {
+    font-size: 3.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.2rem;
+  }
+
+  .events-container {
+    flex-direction: row;
+    justify-content: center;
+    gap: var(--spacing-md);
+  }
+
+  .event-card {
+    flex: 1;
+    max-width: 400px;
+    padding: 2.5rem 1.5rem;
+  }
+
+  .event-card h3 {
+    font-size: 1.8rem;
+  }
+
+  .event-card p {
+    font-size: 1.1rem;
+  }
+
+  .story-content {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--spacing-lg);
+  }
+
+  .story-image-wrapper {
+    max-width: 350px;
+  }
+
+  .story-text {
+    text-align: right;
+    padding-right: 2rem;
+  }
+
+  html[lang="en"] .story-text {
+    text-align: left;
+    padding-right: 0;
+    padding-left: 2rem;
+  }
+
+  .story-text p {
+    font-size: 1.15rem;
+  }
+
+  .countdown-item {
+    width: 100px;
+    height: 110px;
+  }
+
+  .countdown-number {
+    font-size: 2.8rem;
+  }
+
+  .countdown-label {
+    font-size: 0.85rem;
+  }
+
+  .venue-name {
+    font-size: 2.5rem;
+  }
+
+  .venue-address {
+    font-size: 1.2rem;
+  }
+
+  .footer-names {
+    font-size: 2.4rem;
+  }
+
+  .marquee-item {
+    width: 250px;
+    height: 350px;
+    margin: 0 10px;
+  }
+
+  .details {
+    padding: var(--spacing-xl) 0;
+  }
+
+  .countdown {
+    padding: var(--spacing-xl) 0;
+  }
+
+  .story {
+    padding: var(--spacing-xl) 0;
+  }
+
+  .venue {
+    padding: var(--spacing-xl) 0;
+  }
 }
 
-.main-content {
-  transition: transform 1.5s cubic-bezier(0.77, 0, 0.175, 1);
-  transform: scale(0.95);
-  transform-origin: center top;
-}
+/* Desktop */
+@media (min-width: 1024px) {
+  .hero-names {
+    font-size: 6.5rem;
+  }
 
-.main-content:not(.hidden) {
-  transform: scale(1);
+  .hero-names .amp {
+    font-size: 4rem;
+  }
+
+  .music-control {
+    width: 48px;
+    height: 48px;
+    bottom: 2.5rem;
+    left: 2.5rem;
+  }
+
+  html[lang="en"] .music-control {
+    left: auto;
+    right: 2.5rem;
+  }
+
+  .story-image-wrapper {
+    max-width: 400px;
+  }
+
+  .story-text {
+    padding-right: 3rem;
+  }
+
+  html[lang="en"] .story-text {
+    padding-left: 3rem;
+  }
+
+  /* Enable fixed background only on desktop (breaks on iOS) */
+  .venue {
+    background-attachment: fixed;
+  }
 }
